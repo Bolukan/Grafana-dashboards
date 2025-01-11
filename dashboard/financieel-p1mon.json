@@ -1,0 +1,1510 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 8,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "be8pllgxdcq2ob"
+            },
+            "description": "Afgelopen 30 dagen",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "__systemRef": "hideSeriesFrom",
+                        "matcher": {
+                            "id": "byNames",
+                            "options": {
+                                "mode": "exclude",
+                                "names": [
+                                    "GAS",
+                                    "WATER",
+                                    "ELECTRICITY",
+                                    "PRODUCTION"
+                                ],
+                                "prefix": "All except:",
+                                "readOnly": true
+                            }
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hideFrom",
+                                "value": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 0
+            },
+            "hideTimeOverride": true,
+            "id": 2,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "cacheDurationSeconds": 300,
+                    "datasource": {
+                        "type": "marcusolsson-json-datasource",
+                        "uid": "be8pllgxdcq2ob"
+                    },
+                    "fields": [
+                        {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_lOCAL",
+                            "type": "time"
+                        },
+                        {
+                            "jsonPath": "$.*.[2]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[3]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[4]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[5]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "GAS"
+                        },
+                        {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "WATER",
+                            "type": "number"
+                        }
+                    ],
+                    "hide": false,
+                    "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                    "method": "GET",
+                    "params": [
+                        [
+                            "limit",
+                            "30"
+                        ]
+                    ],
+                    "queryParams": "",
+                    "refId": "A",
+                    "urlPath": "/api/v1/financial/day"
+                }
+            ],
+            "timeFrom": "30d",
+            "title": "Financieel (dagen)",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "ELECTRICITY",
+                        "binary": {
+                            "left": "ELECTRICITY_HIGH",
+                            "operator": "+",
+                            "reducer": "sum",
+                            "right": "ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_HIGH",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_LOW",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION",
+                        "binary": {
+                            "left": "PRODUCTION_HIGH",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "names": [
+                                "TIMESTAMP_lOCAL",
+                                "GAS",
+                                "WATER",
+                                "ELECTRICITY",
+                                "PRODUCTION"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "be8pllgxdcq2ob"
+            },
+            "description": "Afgelopen 2 jaar",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 100,
+                        "gradientMode": "hue",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "__systemRef": "hideSeriesFrom",
+                        "matcher": {
+                            "id": "byNames",
+                            "options": {
+                                "mode": "exclude",
+                                "names": [
+                                    "GAS",
+                                    "WATER",
+                                    "ELECTRICITY",
+                                    "PRODUCTION"
+                                ],
+                                "prefix": "All except:",
+                                "readOnly": true
+                            }
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.hideFrom",
+                                "value": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 0
+            },
+            "hideTimeOverride": true,
+            "id": 3,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "cacheDurationSeconds": 300,
+                    "datasource": {
+                        "type": "marcusolsson-json-datasource",
+                        "uid": "be8pllgxdcq2ob"
+                    },
+                    "fields": [
+                        {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_lOCAL",
+                            "type": "time"
+                        },
+                        {
+                            "jsonPath": "$.*.[2]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[3]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[4]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[5]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "GAS"
+                        },
+                        {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "WATER",
+                            "type": "number"
+                        }
+                    ],
+                    "hide": false,
+                    "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                    "method": "GET",
+                    "params": [
+                        [
+                            "limit",
+                            "24"
+                        ]
+                    ],
+                    "queryParams": "",
+                    "refId": "A",
+                    "urlPath": "/api/v1/financial/month"
+                }
+            ],
+            "timeFrom": "24M",
+            "title": "Financieel (maanden)",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "ELECTRICITY",
+                        "binary": {
+                            "left": "ELECTRICITY_HIGH",
+                            "operator": "+",
+                            "reducer": "sum",
+                            "right": "ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_HIGH",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_LOW",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION",
+                        "binary": {
+                            "left": "PRODUCTION_HIGH",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "names": [
+                                "TIMESTAMP_lOCAL",
+                                "GAS",
+                                "WATER",
+                                "ELECTRICITY",
+                                "PRODUCTION"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "be8pllgxdcq2ob"
+            },
+            "description": "Afgelopen 30 dagen",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 90,
+                        "gradientMode": "scheme",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 8
+            },
+            "hideTimeOverride": true,
+            "id": 5,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "cacheDurationSeconds": 300,
+                    "datasource": {
+                        "type": "marcusolsson-json-datasource",
+                        "uid": "be8pllgxdcq2ob"
+                    },
+                    "fields": [
+                        {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_lOCAL",
+                            "type": "time"
+                        },
+                        {
+                            "jsonPath": "$.*.[2]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[3]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[4]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[5]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "GAS"
+                        },
+                        {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "WATER",
+                            "type": "number"
+                        }
+                    ],
+                    "hide": false,
+                    "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                    "method": "GET",
+                    "params": [
+                        [
+                            "limit",
+                            "30"
+                        ]
+                    ],
+                    "queryParams": "",
+                    "refId": "A",
+                    "urlPath": "/api/v1/financial/day"
+                }
+            ],
+            "timeFrom": "30d",
+            "title": "Financieel (dagen)",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "ELECTRICITY",
+                        "binary": {
+                            "left": "ELECTRICITY_HIGH",
+                            "operator": "+",
+                            "reducer": "sum",
+                            "right": "ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_HIGH",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_LOW",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION",
+                        "binary": {
+                            "left": "PRODUCTION_HIGH",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "mode": "reduceRow",
+                        "reduce": {
+                            "include": [
+                                "GAS",
+                                "WATER",
+                                "ELECTRICITY",
+                                "PRODUCTION"
+                            ],
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "names": [
+                                "TIMESTAMP_lOCAL",
+                                "Total"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "be8pllgxdcq2ob"
+            },
+            "description": "Afgelopen 2 jaar",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 90,
+                        "gradientMode": "scheme",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 8
+            },
+            "hideTimeOverride": true,
+            "id": 4,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "cacheDurationSeconds": 300,
+                    "datasource": {
+                        "type": "marcusolsson-json-datasource",
+                        "uid": "be8pllgxdcq2ob"
+                    },
+                    "fields": [
+                        {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_lOCAL",
+                            "type": "time"
+                        },
+                        {
+                            "jsonPath": "$.*.[2]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[3]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[4]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[5]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "GAS"
+                        },
+                        {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "WATER",
+                            "type": "number"
+                        }
+                    ],
+                    "hide": false,
+                    "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                    "method": "GET",
+                    "params": [
+                        [
+                            "limit",
+                            "24"
+                        ]
+                    ],
+                    "queryParams": "",
+                    "refId": "A",
+                    "urlPath": "/api/v1/financial/month"
+                }
+            ],
+            "timeFrom": "24M",
+            "title": "Financieel (maanden)",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "ELECTRICITY",
+                        "binary": {
+                            "left": "ELECTRICITY_HIGH",
+                            "operator": "+",
+                            "reducer": "sum",
+                            "right": "ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_HIGH",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_LOW",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION",
+                        "binary": {
+                            "left": "PRODUCTION_HIGH",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "mode": "reduceRow",
+                        "reduce": {
+                            "include": [
+                                "GAS",
+                                "WATER",
+                                "ELECTRICITY",
+                                "PRODUCTION"
+                            ],
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "names": [
+                                "TIMESTAMP_lOCAL",
+                                "Total"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "be8pllgxdcq2ob"
+            },
+            "description": "Afgelopen 13 maanden",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 90,
+                        "gradientMode": "scheme",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 16
+            },
+            "hideTimeOverride": true,
+            "id": 7,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "cacheDurationSeconds": 300,
+                    "datasource": {
+                        "type": "marcusolsson-json-datasource",
+                        "uid": "be8pllgxdcq2ob"
+                    },
+                    "fields": [
+                        {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_lOCAL",
+                            "type": "time"
+                        },
+                        {
+                            "jsonPath": "$.*.[2]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[3]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[4]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[5]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "GAS"
+                        },
+                        {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "WATER",
+                            "type": "number"
+                        }
+                    ],
+                    "hide": false,
+                    "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                    "method": "GET",
+                    "params": [
+                        [
+                            "limit",
+                            "400"
+                        ]
+                    ],
+                    "queryParams": "",
+                    "refId": "A",
+                    "urlPath": "/api/v1/financial/day"
+                }
+            ],
+            "timeFrom": "13M",
+            "title": "Financieel (jaar)",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "ELECTRICITY",
+                        "binary": {
+                            "left": "ELECTRICITY_HIGH",
+                            "operator": "+",
+                            "reducer": "sum",
+                            "right": "ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_HIGH",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_LOW",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION",
+                        "binary": {
+                            "left": "PRODUCTION_HIGH",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "mode": "reduceRow",
+                        "reduce": {
+                            "include": [
+                                "GAS",
+                                "WATER",
+                                "ELECTRICITY",
+                                "PRODUCTION"
+                            ],
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "names": [
+                                "TIMESTAMP_lOCAL",
+                                "Total"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "marcusolsson-json-datasource",
+                "uid": "be8pllgxdcq2ob"
+            },
+            "description": "Afgelopen 2 jaar",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "bars",
+                        "fillOpacity": 90,
+                        "gradientMode": "scheme",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 16
+            },
+            "hideTimeOverride": true,
+            "id": 6,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "cacheDurationSeconds": 300,
+                    "datasource": {
+                        "type": "marcusolsson-json-datasource",
+                        "uid": "be8pllgxdcq2ob"
+                    },
+                    "fields": [
+                        {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_lOCAL",
+                            "type": "time"
+                        },
+                        {
+                            "jsonPath": "$.*.[2]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[3]",
+                            "language": "jsonpath",
+                            "name": "ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[4]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        {
+                            "jsonPath": "$.*.[5]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "GAS"
+                        },
+                        {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "WATER",
+                            "type": "number"
+                        }
+                    ],
+                    "hide": false,
+                    "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                    "method": "GET",
+                    "params": [
+                        [
+                            "limit",
+                            "24"
+                        ]
+                    ],
+                    "queryParams": "",
+                    "refId": "A",
+                    "urlPath": "/api/v1/financial/year"
+                }
+            ],
+            "timeFrom": "24M",
+            "title": "Financieel (jaar)",
+            "transformations": [
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "ELECTRICITY",
+                        "binary": {
+                            "left": "ELECTRICITY_HIGH",
+                            "operator": "+",
+                            "reducer": "sum",
+                            "right": "ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_HIGH",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_HIGH"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION_LOW",
+                        "binary": {
+                            "left": "0",
+                            "operator": "-",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_REVENUES_ELECTRICITY_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        },
+                        "replaceFields": false
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "PRODUCTION",
+                        "binary": {
+                            "left": "PRODUCTION_HIGH",
+                            "reducer": "sum",
+                            "right": "PRODUCTION_LOW"
+                        },
+                        "mode": "binary",
+                        "reduce": {
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "mode": "reduceRow",
+                        "reduce": {
+                            "include": [
+                                "GAS",
+                                "WATER",
+                                "ELECTRICITY",
+                                "PRODUCTION"
+                            ],
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "filterFieldsByName",
+                    "options": {
+                        "include": {
+                            "names": [
+                                "TIMESTAMP_lOCAL",
+                                "Total"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "type": "timeseries"
+        }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [
+        "p1mon"
+    ],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-24h",
+        "to": "now"
+    },
+    "timepicker": {
+        "hidden": true,
+        "refresh_intervals": [
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h",
+            "2h",
+            "1d"
+        ]
+    },
+    "timezone": "",
+    "title": "Financieel (p1mon)",
+    "uid": "22OKeXzVk",
+    "version": 4,
+    "weekStart": ""
+}

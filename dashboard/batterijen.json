@@ -1,0 +1,236 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 3,
+    "links": [],
+    "panels": [
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "de9ejk2fk91j4b"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 2,
+                    "displayName": "${__field.labels[\"location\"]}",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "volt"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 11,
+                "x": 0,
+                "y": 0
+            },
+            "id": 1,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "de9ejk2fk91j4b"
+                    },
+                    "query": "import \"sql\"\r\nimport \"join\"\r\nimport \"influxdata/influxdb/secrets\"\r\n\r\nusername = secrets.get(key: \"MYSQL_USERNAME\")\r\npassword = secrets.get(key: \"MYSQL_PASSWORD\")\r\nmysql_server = secrets.get(key: \"MYSQL_SERVER\")\r\n\r\nble = sql.from(\r\n    driverName: \"mysql\",\r\n    dataSourceName: \"${username}:${password}@tcp(${mysql_server})/sensor\",\r\n    query: \"SELECT UPPER(mac) as topic, location as location FROM device WHERE model = 'LYWSD03MMC_ATC' LIMIT 50\",\r\n)\r\n\r\ndata = from(bucket: \"Residence\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"ble\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Power\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> group()\r\n\r\njoin.inner(\r\n    left: data,\r\n    right: ble,\r\n    on: (l, r) => l.topic == r.topic,\r\n    as: (l, r) => ({l with location: r.location}),\r\n)\r\n  |> group(columns: [\"_time\", \"_value\"], mode: \"except\")",
+                    "refId": "A"
+                }
+            ],
+            "title": "BLE Batteries",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "de9ejk2fk91j4b"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "decimals": 2,
+                    "displayName": "${__field.labels[\"location\"]} (${__field.labels[\"topic\"]})",
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "volt"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 11,
+                "x": 11,
+                "y": 0
+            },
+            "id": 2,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "de9ejk2fk91j4b"
+                    },
+                    "query": "import \"sql\"\r\nimport \"join\"\r\nimport \"influxdata/influxdb/secrets\"\r\n\r\nusername = secrets.get(key: \"MYSQL_USERNAME\")\r\npassword = secrets.get(key: \"MYSQL_PASSWORD\")\r\nmysql_server = secrets.get(key: \"MYSQL_SERVER\")\r\n\r\nble = sql.from(\r\n    driverName: \"mysql\",\r\n    dataSourceName: \"${username}:${password}@tcp(${mysql_server})/sensor\",\r\n    query: \"SELECT topic as topic, location as location FROM grafana WHERE protocol = 'zigbee' LIMIT 50\",\r\n)\r\n\r\ndata = from(bucket: \"Residence\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"zigbee\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Power\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> group()\r\n\r\njoin.inner(\r\n    left: data,\r\n    right: ble,\r\n    on: (l, r) => l.topic == r.topic,\r\n    as: (l, r) => ({l with location: r.location}),\r\n)\r\n  |> group(columns: [\"_time\", \"_value\"], mode: \"except\")",
+                    "refId": "A"
+                }
+            ],
+            "title": "Zigbee Batteries",
+            "type": "timeseries"
+        }
+    ],
+    "preload": false,
+    "schemaVersion": 40,
+    "tags": [
+        "ble",
+        "zigbee"
+    ],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-24h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Batterijen",
+    "uid": "be8ppwcjemby8f",
+    "version": 8,
+    "weekStart": ""
+}

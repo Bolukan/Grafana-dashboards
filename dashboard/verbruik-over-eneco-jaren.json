@@ -1,0 +1,253 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 21,
+    "links": [],
+    "panels": [
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "de9ejk2fk91j4b"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "m3"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 17,
+                "w": 12,
+                "x": 0,
+                "y": 0
+            },
+            "id": 1,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "de9ejk2fk91j4b"
+                    },
+                    "query": "import \"date\"\r\n\r\nfrom(bucket: \"Residence\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"topic\"] == \"pi58\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"p1mon\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_gas_m3\")\r\n  |> increase()\r\n  |> rename(columns: {_value: \"Gas_CY\"})\r\n  |> yield(name: \"CY\")\r\n\r\nfrom(bucket: \"Residence\")\r\n  |> range(start: date.sub(d: 1y, from: v.timeRangeStart), stop: date.sub(d: 1y, from: v.timeRangeStop))\r\n  |> filter(fn: (r) => r[\"topic\"] == \"pi58\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"p1mon\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_gas_m3\")\r\n  |> increase()\r\n  |> timeShift(duration: 1y)\r\n  |> rename(columns: {_value: \"Gas_LY1\"})\r\n  |> yield(name: \"LY1\")\r\n\r\nfrom(bucket: \"Residence\")\r\n  |> range(start: date.sub(d: 2y, from: v.timeRangeStart), stop: date.sub(d: 2y, from: v.timeRangeStop))\r\n  |> filter(fn: (r) => r[\"topic\"] == \"pi58\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"p1mon\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_gas_m3\")\r\n  |> increase()\r\n  |> timeShift(duration: 2y)\r\n  |> rename(columns: {_value: \"Gas_LY2\"})\r\n  |> yield(name: \"LY2\")\r\n \r\n",
+                    "refId": "A"
+                }
+            ],
+            "title": "Gasverbruik",
+            "transformations": [
+                {
+                    "id": "renameByRegex",
+                    "options": {
+                        "regex": "([^\\s]+).*",
+                        "renamePattern": "$1"
+                    }
+                }
+            ],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "influxdb",
+                "uid": "de9ejk2fk91j4b"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisBorderShow": false,
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "barWidthFactor": 0.6,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "insertNulls": false,
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "kwatth"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 17,
+                "w": 12,
+                "x": 12,
+                "y": 0
+            },
+            "id": 2,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "pluginVersion": "11.4.0",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "influxdb",
+                        "uid": "de9ejk2fk91j4b"
+                    },
+                    "query": "import \"date\"\r\n\r\nfrom(bucket: \"Residence\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"topic\"] == \"pi58\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"p1mon\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({ r with _value: (r.consumption_delta_kwh) - (r.production_delta_kwh) }))\r\n  |> drop(columns: [\"consumption_delta_kwh\", \"production_delta_kwh\"])\r\n  |> cumulativeSum()\r\n  |> rename(columns: {_value: \"kWh_CY\"})\r\n  |> yield(name: \"CY\")\r\n\r\n\r\nfrom(bucket: \"Residence\")\r\n  |> range(start: date.sub(d: 1y, from: v.timeRangeStart), stop: date.sub(d: 1y, from: v.timeRangeStop))\r\n  |> filter(fn: (r) => r[\"topic\"] == \"pi58\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"p1mon\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({ r with _value: (r.consumption_delta_kwh) - (r.production_delta_kwh) }))\r\n  |> drop(columns: [\"consumption_delta_kwh\", \"production_delta_kwh\"])\r\n  |> cumulativeSum()\r\n  |> rename(columns: {_value: \"kWh_LY1\"})\r\n  |> timeShift(duration: 1y)\r\n  |> yield(name: \"LY1\")\r\n\r\nfrom(bucket: \"Residence\")\r\n  |> range(start: date.sub(d: 2y, from: v.timeRangeStart), stop: date.sub(d: 2y, from: v.timeRangeStop))\r\n  |> filter(fn: (r) => r[\"topic\"] == \"pi58\")\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"protocol\"] == \"p1mon\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({ r with _value: (r.consumption_delta_kwh) - (r.production_delta_kwh) }))\r\n  |> drop(columns: [\"consumption_delta_kwh\", \"production_delta_kwh\"])\r\n  |> cumulativeSum()\r\n  |> rename(columns: {_value: \"kWh_LY2\"})\r\n  |> timeShift(duration: 2y)\r\n  |> yield(name: \"LY2\")\r\n\r\n\r\n",
+                    "refId": "A"
+                }
+            ],
+            "title": "Electriciteitsverbruik",
+            "transformations": [
+                {
+                    "id": "renameByRegex",
+                    "options": {
+                        "regex": "([^\\s]+).*",
+                        "renamePattern": "$1"
+                    }
+                }
+            ],
+            "type": "timeseries"
+        }
+    ],
+    "preload": false,
+    "refresh": "",
+    "schemaVersion": 40,
+    "tags": [],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "2024-02-19T22:00:00.000Z",
+        "to": "2025-02-19T21:59:59.000Z"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Verbruik over Eneco-jaren",
+    "uid": "e491522d-c32f-4fcb-b8ba-8c0bcb6c6740",
+    "version": 4,
+    "weekStart": ""
+}
