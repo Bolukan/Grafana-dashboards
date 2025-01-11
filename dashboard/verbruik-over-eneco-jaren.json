@@ -26,7 +26,7 @@
                 "type": "influxdb",
                 "uid": "de9ejk2fk91j4b"
             },
-            "description": "",
+            "description": "Gasverbruik over seizoen",
             "fieldConfig": {
                 "defaults": {
                     "color": {
@@ -241,13 +241,13 @@
         "list": []
     },
     "time": {
-        "from": "2024-02-19T22:00:00.000Z",
-        "to": "2025-02-19T21:59:59.000Z"
+        "from": "2024-06-30T21:00:00.000Z",
+        "to": "2025-06-30T20:59:59.000Z"
     },
     "timepicker": {},
     "timezone": "",
     "title": "Verbruik over Eneco-jaren",
     "uid": "e491522d-c32f-4fcb-b8ba-8c0bcb6c6740",
-    "version": 4,
+    "version": 7,
     "weekStart": ""
 }
