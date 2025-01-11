@@ -109,7 +109,7 @@
                         "type": "influxdb",
                         "uid": "de9ejk2fk91j4b"
                     },
-                    "query": "from(bucket: \"Residence\")\r\n  |> range(start: 2021-01-01, stop: 2025-12-31)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |> aggregateWindow(every: 1w, fn: sum, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+                    "query": "from(bucket: \"Residence\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |> aggregateWindow(every: 1w, fn: sum, createEmpty: false)\r\n  |> yield(name: \"mean\")",
                     "refId": "A"
                 }
             ],
@@ -204,7 +204,7 @@
                         "type": "influxdb",
                         "uid": "de9ejk2fk91j4b"
                     },
-                    "query": "from(bucket: \"Residence\")\r\n  |> range(start: 2021-01-01, stop: 2025-12-31)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n  |> aggregateWindow(every: 1w, fn: sum, createEmpty: false)\r\n  |> yield(name: \"mean\")",
+                    "query": "from(bucket: \"Residence\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"Powergas\")\r\n  |> filter(fn: (r) => r[\"duration\"] == \"day\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n  |> aggregateWindow(every: 1w, fn: sum, createEmpty: false)\r\n  |> yield(name: \"mean\")",
                     "refId": "A"
                 }
             ],
@@ -609,6 +609,6 @@
     "timezone": "browser",
     "title": "Powergas",
     "uid": "de9o1iogbj2tcb",
-    "version": 18,
+    "version": 19,
     "weekStart": ""
 }
