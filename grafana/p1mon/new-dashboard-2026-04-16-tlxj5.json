@@ -1,0 +1,1989 @@
+{
+  "apiVersion": "dashboard.grafana.app/v2",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "defj7byhgzi8sgd"
+  },
+  "spec": {
+    "annotations": [
+      {
+        "kind": "AnnotationQuery",
+        "spec": {
+          "builtIn": true,
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations \u0026 Alerts",
+          "query": {
+            "datasource": {
+              "name": "-- Grafana --"
+            },
+            "group": "grafana",
+            "kind": "DataQuery",
+            "spec": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "version": "v0"
+          }
+        }
+      }
+    ],
+    "cursorSync": "Off",
+    "description": "Elektriciteitsverbruik (p1mon)",
+    "editable": true,
+    "elements": {
+      "panel-1": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "32"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/hour"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "32h"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": "0",
+                        "operator": "-",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "CONSUMPTION_DELTA_KWH",
+                          "PRODUCTION_DELTA_KWH_MIN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Afgelopen 24 uur",
+          "id": 1,
+          "links": [],
+          "title": "Electriciteitsverbruik (uren)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.0"
+          }
+        }
+      },
+      "panel-10": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "de9ejk2fk91j4b"
+                      },
+                      "group": "influxdb",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "query": "from(bucket: \"Residence\")\r\n  |\u003e range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"quarter\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |\u003e map(fn: (r) =\u003e ({ r with _value: if r[\"_field\"] == \"production_delta_kwh\" then -r._value else r._value }))\r\n  |\u003e aggregateWindow(every: 15m, fn: sum, timeSrc: \"_start\", createEmpty: false)\r\n  |\u003e yield(name: \"mean\")"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "32h"
+              },
+              "transformations": []
+            }
+          },
+          "description": "Afgelopen 24 uur",
+          "id": 10,
+          "links": [],
+          "title": "Electriciteitsverbruik (kwartier)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 1,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "displayName": "${__field.name}",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.4.2"
+          }
+        }
+      },
+      "panel-11": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "de9ejk2fk91j4b"
+                      },
+                      "group": "influxdb",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "query": "from(bucket: \"Residence\")\r\n  |\u003e range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"quarter\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_delta_kwh\" or r[\"_field\"] == \"production_delta_kwh\")\r\n  |\u003e map(fn: (r) =\u003e ({ r with _value: if r[\"_field\"] == \"production_delta_kwh\" then -r._value else r._value }))\r\n  |\u003e aggregateWindow(every: 1h, fn: sum, timeSrc: \"_start\", createEmpty: false)\r\n  |\u003e yield(name: \"mean\")"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "32h"
+              },
+              "transformations": []
+            }
+          },
+          "description": "Afgelopen 24 uur",
+          "id": 11,
+          "links": [],
+          "title": "Electriciteitsverbruik (kwartier)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 1,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "displayName": "${__field.name}",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.4.2"
+          }
+        }
+      },
+      "panel-2": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "30"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/day"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "30d"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": "0",
+                        "operator": "-",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "DELTA_KWH",
+                      "binary": {
+                        "left": "CONSUMPTION_DELTA_KWH",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH_MIN"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "CONSUMPTION_DELTA_KWH",
+                          "PRODUCTION_DELTA_KWH_MIN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Afgelopen 30 dagen",
+          "id": 2,
+          "links": [],
+          "title": "Elektriciteitsverbruik (dagen)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "normal"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.0"
+          }
+        }
+      },
+      "panel-3": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "24"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/month"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "24M"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": {
+                          "fixed": "0"
+                        },
+                        "operator": "-",
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "PRODUCTION_DELTA_KWH"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "DELTA_KWH",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "CONSUMPTION_DELTA_KWH"
+                          }
+                        },
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "PRODUCTION_DELTA_KWH_MIN"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "CONSUMPTION_DELTA_KWH",
+                          "PRODUCTION_DELTA_KWH_MIN",
+                          "TIMESTAMP_LOCAL"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 3,
+          "links": [],
+          "title": "Electriciteitsverbruik (maanden)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "normal"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.0"
+          }
+        }
+      },
+      "panel-4": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "1440"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/minute"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "6h"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA",
+                      "binary": {
+                        "left": {
+                          "fixed": "0"
+                        },
+                        "operator": "-",
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "PRODUCTION_DELTA_KWH"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "CONSUMPTION_DELTA_KWH",
+                          "PRODUCTION_DELTA"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Afgelopen uur",
+          "id": 4,
+          "links": [],
+          "title": "Electriciteitsverbruik (minuten)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "fieldMinMax": false,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.0"
+          }
+        }
+      },
+      "panel-5": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "5"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/year"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "5y"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": "0",
+                        "operator": "-",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "CONSUMPTION_DELTA_KWH",
+                          "PRODUCTION_DELTA_KWH_MIN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 5,
+          "links": [],
+          "title": "Electriciteitsverbruik (jaren)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "normal"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.4.2"
+          }
+        }
+      },
+      "panel-6": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "30"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/day"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "30d"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": "0",
+                        "operator": "-",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "DELTA_KWH",
+                      "binary": {
+                        "left": "CONSUMPTION_DELTA_KWH",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH_MIN"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "DELTA_KWH"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Afgelopen 30 dagen",
+          "id": 6,
+          "links": [],
+          "title": "Elektriciteitsverbruik (dagen)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.0"
+          }
+        }
+      },
+      "panel-8": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "5"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/year"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "5y"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": "0",
+                        "operator": "-",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "DELTA_KWH",
+                      "binary": {
+                        "left": "CONSUMPTION_DELTA_KWH",
+                        "reducer": "sum",
+                        "right": "PRODUCTION_DELTA_KWH_MIN"
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "DELTA_KWH"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "",
+          "id": 8,
+          "links": [],
+          "title": "Electriciteitsverbruik (jaren)",
+          "vizConfig": {
+            "group": "table",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true
+              }
+            },
+            "version": "12.4.2"
+          }
+        }
+      },
+      "panel-9": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "be8pllgxdcq2ob"
+                      },
+                      "group": "marcusolsson-json-datasource",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "$.*.[0]",
+                            "language": "jsonpath",
+                            "name": "TIMESTAMP_LOCAL",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.*.[6]",
+                            "language": "jsonpath",
+                            "name": "CONSUMPTION_DELTA_KWH",
+                            "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.*.[7]",
+                            "language": "jsonpath",
+                            "name": "PRODUCTION_DELTA_KWH",
+                            "type": "number"
+                          }
+                        ],
+                        "key": "Q-b4fed89b-e900-4e99-8b77-a676986047d1-0",
+                        "method": "GET",
+                        "params": [
+                          [
+                            "limit",
+                            "30"
+                          ]
+                        ],
+                        "queryParams": "",
+                        "urlPath": "/api/v1/powergas/month"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "hideTimeOverride": true,
+                "timeFrom": "24M"
+              },
+              "transformations": [
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "PRODUCTION_DELTA_KWH_MIN",
+                      "binary": {
+                        "left": {
+                          "fixed": "0"
+                        },
+                        "operator": "-",
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "PRODUCTION_DELTA_KWH"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "calculateField",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "alias": "DELTA_KWH",
+                      "binary": {
+                        "left": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "CONSUMPTION_DELTA_KWH"
+                          }
+                        },
+                        "right": {
+                          "matcher": {
+                            "id": "byName",
+                            "options": "PRODUCTION_DELTA_KWH_MIN"
+                          }
+                        }
+                      },
+                      "mode": "binary",
+                      "reduce": {
+                        "reducer": "sum"
+                      }
+                    }
+                  }
+                },
+                {
+                  "group": "filterFieldsByName",
+                  "kind": "Transformation",
+                  "spec": {
+                    "options": {
+                      "include": {
+                        "names": [
+                          "TIMESTAMP_LOCAL",
+                          "DELTA_KWH"
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "description": "Afgelopen 2 jaar",
+          "id": 9,
+          "links": [],
+          "title": "Electriciteitsverbruik (maanden)",
+          "vizConfig": {
+            "group": "timeseries",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "bars",
+                    "fillOpacity": 100,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "kwatth"
+                },
+                "overrides": []
+              },
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "13.0.0"
+          }
+        }
+      }
+    },
+    "layout": {
+      "kind": "GridLayout",
+      "spec": {
+        "items": [
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-4"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-1"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 12,
+              "y": 0
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-2"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 0,
+              "y": 8
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-6"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 12,
+              "y": 8
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-3"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 0,
+              "y": 16
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-9"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 12,
+              "y": 16
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-5"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 0,
+              "y": 24
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-8"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 12,
+              "y": 24
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-10"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 0,
+              "y": 32
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-11"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 12,
+              "y": 32
+            }
+          }
+        ]
+      }
+    },
+    "links": [],
+    "liveNow": false,
+    "preload": false,
+    "tags": [
+      "p1mon"
+    ],
+    "timeSettings": {
+      "autoRefresh": "",
+      "autoRefreshIntervals": [
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "fiscalYearStartMonth": 0,
+      "from": "now-24h",
+      "hideTimepicker": true,
+      "timezone": "browser",
+      "to": "now"
+    },
+    "title": "Elektriciteitsverbruik (p1mon)",
+    "variables": []
+  }
+}
