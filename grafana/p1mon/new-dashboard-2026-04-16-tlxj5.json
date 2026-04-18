@@ -318,6 +318,10 @@
                 "overrides": []
               },
               "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
@@ -331,7 +335,7 @@
                 }
               }
             },
-            "version": "12.4.2"
+            "version": "13.0.0"
           }
         }
       },
@@ -388,7 +392,7 @@
                     "axisLabel": "",
                     "axisPlacement": "auto",
                     "barAlignment": 1,
-                    "barWidthFactor": 0.6,
+                    "barWidthFactor": 0.9,
                     "drawStyle": "bars",
                     "fillOpacity": 100,
                     "gradientMode": "hue",
@@ -434,6 +438,10 @@
                 "overrides": []
               },
               "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
@@ -447,7 +455,7 @@
                 }
               }
             },
-            "version": "12.4.2"
+            "version": "13.0.0"
           }
         }
       },
@@ -1224,6 +1232,10 @@
                 "overrides": []
               },
               "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
                 "legend": {
                   "calcs": [],
                   "displayMode": "list",
@@ -1237,7 +1249,7 @@
                 }
               }
             },
-            "version": "12.4.2"
+            "version": "13.0.0"
           }
         }
       },
@@ -1602,7 +1614,7 @@
                 "showHeader": true
               }
             },
-            "version": "12.4.2"
+            "version": "13.0.0"
           }
         }
       },
@@ -1960,7 +1972,20 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/Bolukan/Grafana-dashboards/blob/master/grafana/p1mon/new-dashboard-2026-04-16-tlxj5.json"
+      }
+    ],
     "liveNow": false,
     "preload": false,
     "tags": [
