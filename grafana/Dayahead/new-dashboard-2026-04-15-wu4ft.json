@@ -275,7 +275,7 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "thresholds"
                   },
                   "custom": {
                     "axisBorderShow": false,
@@ -288,7 +288,7 @@
                     "barWidthFactor": 0.8,
                     "drawStyle": "bars",
                     "fillOpacity": 80,
-                    "gradientMode": "none",
+                    "gradientMode": "scheme",
                     "hideFrom": {
                       "legend": false,
                       "tooltip": false,
@@ -318,12 +318,12 @@
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green",
+                        "color": "red",
                         "value": 0
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "color": "green",
+                        "value": 0
                       }
                     ]
                   },
