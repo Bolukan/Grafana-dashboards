@@ -237,7 +237,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-6h",
+      "from": "now/h-6h",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now/d+1d"
