@@ -486,7 +486,7 @@
                       "group": "influxdb",
                       "kind": "DataQuery",
                       "spec": {
-                        "query": "from(bucket: \"Residence\")\n  |\u003e range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"DayAhead\")\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"dayahead\")\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"quarter\")\n  |\u003e aggregateWindow(every: 15m, fn: mean, createEmpty: false, timeSrc: \"_start\")\n  |\u003e map(fn: (r) =\u003e ({r with prod_price: (r._value + 0.09161) * 1.21}))\n  |\u003e yield(name: \"mean\")"
+                        "query": "from(bucket: \"Residence\")\n  |\u003e range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"DayAhead\")\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"dayahead\")\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"quarter\")\n  |\u003e aggregateWindow(every: 15m, fn: mean, createEmpty: false, timeSrc: \"_start\")\n  |\u003e map(fn: (r) =\u003e ({r with _value: (r._value + 0.09161) * 1.21}))\n  |\u003e yield(name: \"mean\")"
                       },
                       "version": "v0"
                     },
