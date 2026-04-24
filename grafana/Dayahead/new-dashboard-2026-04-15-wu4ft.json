@@ -267,7 +267,7 @@
           "description": "",
           "id": 3,
           "links": [],
-          "title": "Quarterly average",
+          "title": "Inkoop prijs",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
