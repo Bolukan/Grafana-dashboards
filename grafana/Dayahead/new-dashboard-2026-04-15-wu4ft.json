@@ -405,7 +405,7 @@
                     "axisColorMode": "text",
                     "axisLabel": "",
                     "axisPlacement": "auto",
-                    "axisSoftMin": 0.14,
+                    "axisSoftMin": 0,
                     "fillOpacity": 80,
                     "gradientMode": "none",
                     "hideFrom": {
