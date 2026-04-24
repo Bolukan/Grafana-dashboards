@@ -225,7 +225,7 @@
                 "xTickLabelSpacing": 100
               }
             },
-            "version": "13.0.0"
+            "version": "13.0.1"
           }
         }
       }
@@ -250,7 +250,20 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/Bolukan/Grafana-dashboards/blob/master/grafana/p1mon/new-dashboard-2026-04-16-k55us.json"
+      }
+    ],
     "liveNow": false,
     "preload": false,
     "tags": [
@@ -271,7 +284,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now/d-1d",
+      "from": "now/h-1d",
       "hideTimepicker": false,
       "timezone": "Europe/Amsterdam",
       "to": "now/d"
