@@ -558,7 +558,9 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "palette-classic"
+                    "fixedColor": "blue",
+                    "mode": "thresholds",
+                    "seriesBy": "last"
                   },
                   "custom": {
                     "axisBorderShow": false,
@@ -571,7 +573,7 @@
                     "barWidthFactor": 0.8,
                     "drawStyle": "bars",
                     "fillOpacity": 75,
-                    "gradientMode": "none",
+                    "gradientMode": "scheme",
                     "hideFrom": {
                       "legend": false,
                       "tooltip": false,
@@ -601,47 +603,18 @@
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green",
+                        "color": "red",
                         "value": 0
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "color": "green",
+                        "value": 0
                       }
                     ]
                   },
                   "unit": "currencyEUR"
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "dayahead"
-                    },
-                    "properties": []
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "opslag"
-                    },
-                    "properties": []
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "belasting"
-                    },
-                    "properties": []
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "btw"
-                    },
-                    "properties": []
-                  }
-                ]
+                "overrides": []
               },
               "options": {
                 "annotations": {
