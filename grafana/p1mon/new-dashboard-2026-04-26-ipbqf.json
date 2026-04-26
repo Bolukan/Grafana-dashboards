@@ -292,7 +292,7 @@
                 "name": "panel-2"
               },
               "height": 11,
-              "width": 7,
+              "width": 9,
               "x": 0,
               "y": 12
             }
@@ -340,10 +340,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now/d",
+      "from": "now/d-1d",
       "hideTimepicker": false,
       "timezone": "Europe/Amsterdam",
-      "to": "now"
+      "to": "now/d"
     },
     "title": "Dynamische electriciteitskosten (p1mon)",
     "variables": []
