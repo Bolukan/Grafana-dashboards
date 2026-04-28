@@ -324,7 +324,9 @@
       }
     },
     "preload": false,
-    "tags": [],
+    "tags": [
+      "p1mon"
+    ],
     "timeSettings": {
       "autoRefresh": "",
       "autoRefreshIntervals": [
