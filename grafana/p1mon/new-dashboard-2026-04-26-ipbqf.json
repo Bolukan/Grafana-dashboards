@@ -328,7 +328,7 @@
       "p1mon"
     ],
     "timeSettings": {
-      "autoRefresh": "",
+      "autoRefresh": "15m",
       "autoRefreshIntervals": [
         "5s",
         "10s",
