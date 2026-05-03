@@ -101,7 +101,13 @@
           },
           "description": "",
           "id": 5,
-          "links": [],
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Source data",
+              "url": "https://api.open-meteo.com/v1/forecast?hourly=direct_radiation\u0026latitude=52.0283\u0026longitude=5.1667\u0026tilt=30\u0026azimuth=-24"
+            }
+          ],
           "title": "Direct Radiation Open-Meteo",
           "vizConfig": {
             "group": "timeseries",
@@ -184,7 +190,7 @@
                 }
               }
             },
-            "version": "13.0.0"
+            "version": "13.0.1"
           }
         }
       }
