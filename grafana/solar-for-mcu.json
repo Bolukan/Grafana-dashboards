@@ -222,6 +222,7 @@
                       "mode": "off"
                     }
                   },
+                  "min": 3.5,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
