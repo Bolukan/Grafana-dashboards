@@ -319,7 +319,9 @@
     "liveNow": false,
     "preload": false,
     "tags": [
-      "mqtt"
+      "mqtt",
+      "zigbee",
+      "tasmota"
     ],
     "timeSettings": {
       "autoRefresh": "",
