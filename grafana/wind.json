@@ -43,12 +43,20 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "de9ejk2fk91j4b"
+                        "name": "eg0pidxylmo00e"
                       },
-                      "group": "influxdb",
+                      "group": "marcusolsson-json-datasource",
                       "kind": "DataQuery",
                       "spec": {
-                        "query": "https://api.open-meteo.com/v1/forecast?latitude=52\u0026longitude=5.2\u0026hourly=wind_speed_10m,wind_direction_10m\u0026wind_speed_unit=ms\u0026forecast_days=7\u0026timezone=Europe%2FAmsterdam"
+                        "cacheDurationSeconds": 300,
+                        "fields": [
+                          {
+                            "jsonPath": "[*]"
+                          }
+                        ],
+                        "method": "GET",
+                        "queryParams": "",
+                        "urlPath": ""
                       },
                       "version": "v0"
                     },
@@ -99,7 +107,20 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/Bolukan/Grafana-dashboards/blob/master/grafana/wind.json"
+      }
+    ],
     "liveNow": false,
     "preferences": {
       "layout": {
