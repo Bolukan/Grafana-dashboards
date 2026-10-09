@@ -51,14 +51,16 @@
                         "cacheDurationSeconds": 300,
                         "fields": [
                           {
-                            "jsonPath": "$.hourly.item[*]",
-                            "type": "time"
-                          },
-                          {
                             "jsonPath": "$.hourly.wind_speed_10m[*]",
                             "language": "jsonpath",
-                            "name": "",
+                            "name": "wind_speed_10m",
                             "type": "number"
+                          },
+                          {
+                            "jsonPath": "$.hourly.time[*]",
+                            "language": "jsonpath",
+                            "name": "",
+                            "type": "time"
                           }
                         ],
                         "method": "GET",
@@ -73,19 +75,19 @@
                           ],
                           [
                             "hourly",
-                            "wind_speed_10m,wind_direction_10m"
+                            "wind_speed_10m"
                           ],
                           [
                             "wind_speed_unit",
                             "ms"
                           ],
                           [
-                            "forecast_days",
-                            "7"
-                          ],
-                          [
                             "timezone",
                             "Europe/Amsterdam"
+                          ],
+                          [
+                            "forecast_days",
+                            "7"
                           ]
                         ],
                         "queryParams": "",
@@ -115,7 +117,7 @@
                     "mode": "palette-classic"
                   },
                   "custom": {
-                    "axisBorderShow": false,
+                    "axisBorderShow": true,
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
                     "axisLabel": "",
@@ -132,7 +134,7 @@
                     },
                     "insertNulls": false,
                     "lineInterpolation": "linear",
-                    "lineWidth": 1,
+                    "lineWidth": 2,
                     "pointSize": 5,
                     "scaleDistribution": {
                       "type": "linear"
@@ -160,7 +162,8 @@
                         "value": 80
                       }
                     ]
-                  }
+                  },
+                  "unit": "velocityms"
                 },
                 "overrides": []
               },
@@ -175,6 +178,9 @@
                   "placement": "bottom",
                   "showLegend": true
                 },
+                "timezone": [
+                  "Europe/Amsterdam"
+                ],
                 "tooltip": {
                   "hideZeros": false,
                   "mode": "single",
@@ -247,10 +253,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-6h",
+      "from": "now/d",
       "hideTimepicker": false,
       "timezone": "Europe/Amsterdam",
-      "to": "now"
+      "to": "now/d+6d"
     },
     "title": "Wind",
     "variables": []
