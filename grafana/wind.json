@@ -24,6 +24,32 @@
             "version": "v0"
           }
         }
+      },
+      {
+        "kind": "AnnotationQuery",
+        "spec": {
+          "enable": true,
+          "hide": false,
+          "iconColor": "blue",
+          "name": "Days",
+          "query": {
+            "datasource": {
+              "name": "grafana"
+            },
+            "group": "datasource",
+            "kind": "DataQuery",
+            "spec": {
+              "queryType": "timeRegions",
+              "refId": "Anno",
+              "timeRegion": {
+                "from": "00:00",
+                "timezone": "Europe/Amsterdam",
+                "to": "00:00"
+              }
+            },
+            "version": "v0"
+          }
+        }
       }
     ],
     "cursorSync": "Off",
