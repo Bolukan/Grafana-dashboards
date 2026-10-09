@@ -43,7 +43,7 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "name": "eg0pidxylmo00e"
+                        "name": "afi2bb1dyhm2oc"
                       },
                       "group": "marcusolsson-json-datasource",
                       "kind": "DataQuery",
@@ -51,12 +51,45 @@
                         "cacheDurationSeconds": 300,
                         "fields": [
                           {
-                            "jsonPath": "[*]"
+                            "jsonPath": "$.hourly.item[*]",
+                            "type": "time"
+                          },
+                          {
+                            "jsonPath": "$.hourly.wind_speed_10m[*]",
+                            "language": "jsonpath",
+                            "name": "",
+                            "type": "number"
                           }
                         ],
                         "method": "GET",
+                        "params": [
+                          [
+                            "latitude",
+                            "52.0185"
+                          ],
+                          [
+                            "longitude",
+                            "5.1667"
+                          ],
+                          [
+                            "hourly",
+                            "wind_speed_10m,wind_direction_10m"
+                          ],
+                          [
+                            "wind_speed_unit",
+                            "ms"
+                          ],
+                          [
+                            "forecast_days",
+                            "7"
+                          ],
+                          [
+                            "timezone",
+                            "Europe/Amsterdam"
+                          ]
+                        ],
                         "queryParams": "",
-                        "urlPath": ""
+                        "urlPath": "/v1/forecast"
                       },
                       "version": "v0"
                     },
@@ -71,16 +104,83 @@
           "description": "",
           "id": 1,
           "links": [],
-          "title": "New panel",
+          "title": "Wind snelheid",
           "vizConfig": {
-            "group": "__unconfigured-panel",
+            "group": "timeseries",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
                 "overrides": []
               },
-              "options": {}
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
             },
             "version": "13.0.2"
           }
@@ -98,8 +198,8 @@
                 "kind": "ElementReference",
                 "name": "panel-1"
               },
-              "height": 8,
-              "width": 12,
+              "height": 15,
+              "width": 24,
               "x": 0,
               "y": 0
             }
