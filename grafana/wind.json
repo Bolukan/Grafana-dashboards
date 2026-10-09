@@ -153,6 +153,7 @@
                     "axisBorderShow": true,
                     "axisCenteredZero": false,
                     "axisColorMode": "series",
+                    "axisGridShow": false,
                     "axisLabel": "",
                     "axisPlacement": "left",
                     "axisSoftMin": 0,
