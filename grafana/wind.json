@@ -248,6 +248,10 @@
                           "fixedColor": "light-blue",
                           "mode": "fixed"
                         }
+                      },
+                      {
+                        "id": "custom.lineInterpolation",
+                        "value": "stepAfter"
                       }
                     ]
                   },
