@@ -184,19 +184,35 @@
                       "mode": "none"
                     },
                     "thresholdsStyle": {
-                      "mode": "off"
+                      "mode": "dashed"
                     }
                   },
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green",
+                        "color": "transparent",
                         "value": 0
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "color": "#ffffff",
+                        "value": 1.6
+                      },
+                      {
+                        "color": "light-yellow",
+                        "value": 3.4
+                      },
+                      {
+                        "color": "light-yellow",
+                        "value": 5.5
+                      },
+                      {
+                        "color": "orange",
+                        "value": 8
+                      },
+                      {
+                        "color": "orange",
+                        "value": 10.8
                       }
                     ]
                   },
@@ -252,6 +268,12 @@
                       {
                         "id": "custom.lineInterpolation",
                         "value": "stepAfter"
+                      },
+                      {
+                        "id": "custom.thresholdsStyle",
+                        "value": {
+                          "mode": "off"
+                        }
                       }
                     ]
                   },
