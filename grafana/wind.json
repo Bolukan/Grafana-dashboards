@@ -381,10 +381,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now/d",
+      "from": "now/h",
       "hideTimepicker": false,
       "timezone": "Europe/Amsterdam",
-      "to": "now/d+2d"
+      "to": "now/h+60h"
     },
     "title": "Wind",
     "variables": []
