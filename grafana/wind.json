@@ -264,7 +264,7 @@
                     "properties": [
                       {
                         "id": "unit",
-                        "value": "time:ddd HH:mm"
+                        "value": "time:ddd HH"
                       }
                     ]
                   }
