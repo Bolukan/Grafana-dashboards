@@ -364,7 +364,8 @@
     },
     "preload": false,
     "tags": [
-      "API"
+      "API",
+      "MagicMirror"
     ],
     "timeSettings": {
       "autoRefresh": "",
