@@ -63,7 +63,7 @@
           "description": "",
           "id": 1,
           "links": [],
-          "title": "Dynamische energieprijs",
+          "title": "",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -79,7 +79,7 @@
                     "axisCenteredZero": false,
                     "axisColorMode": "text",
                     "axisGridShow": true,
-                    "axisLabel": "",
+                    "axisLabel": "Dynamische EUR / kWh",
                     "axisPlacement": "auto",
                     "barAlignment": 1,
                     "barWidthFactor": 0.8,
