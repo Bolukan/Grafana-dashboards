@@ -71,7 +71,8 @@
               "fieldConfig": {
                 "defaults": {
                   "color": {
-                    "mode": "thresholds",
+                    "fixedColor": "green",
+                    "mode": "palette-classic-by-name",
                     "seriesBy": "last"
                   },
                   "custom": {
@@ -81,6 +82,7 @@
                     "axisGridShow": true,
                     "axisLabel": "Dynamische EUR / kWh",
                     "axisPlacement": "auto",
+                    "axisSoftMin": 0,
                     "barAlignment": 1,
                     "barWidthFactor": 0.8,
                     "drawStyle": "bars",
@@ -111,14 +113,11 @@
                   },
                   "decimals": 2,
                   "displayName": "${__field.name}",
-                  "fieldMinMax": false,
+                  "fieldMinMax": true,
+                  "min": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
-                      {
-                        "color": "orange",
-                        "value": 0
-                      },
                       {
                         "color": "green",
                         "value": 0
@@ -153,7 +152,7 @@
                         "id": "color",
                         "value": {
                           "fixedColor": "green",
-                          "mode": "thresholds"
+                          "mode": "continuous-GrYlRd"
                         }
                       }
                     ]
