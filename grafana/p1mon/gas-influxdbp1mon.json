@@ -44,7 +44,9 @@
                     "query": {
                       "group": "",
                       "kind": "DataQuery",
-                      "spec": {},
+                      "spec": {
+                        "query": "import \"date\"\r\n\r\nfrom(bucket: \"Residence\")\r\n  |\u003e range(start: 2026-10-01, stop: v.timeRangeStop)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"protocol\"] == \"p1mon\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"topic\"] == \"pi58\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"minute\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n |\u003e aggregateWindow(every: 10m, fn: sum, createEmpty: false )\r\n  |\u003e map(fn: (r) =\u003e ({\r\n      r with\r\n      hour: date.hour(t: r._time),\r\n      minute: date.minute(t: r._time)\r\n  }))\r\n\r\n  |\u003e group(columns: [\"hour\", \"minute\"])\r\n  |\u003e sum(column: \"_value\")\r\n\r\n  |\u003e map(fn: (r) =\u003e ({\r\n      r with\r\n      _time: date.add(\r\n          d: duration(v: string(v: r.hour * 60 + r.minute) + \"m\"),\r\n          to: 2026-11-01T00:00:00Z\r\n      )\r\n  }))\r\n\r\n  |\u003e group()\r\n  |\u003e sort(columns: [\"_time\"])\r\n  |\u003e drop(columns: [\"hour\", \"minute\"])"
+                      },
                       "version": "v0"
                     },
                     "refId": "A"
@@ -60,14 +62,81 @@
           "links": [],
           "title": "Gas (Influxdb|p1mon)",
           "vizConfig": {
-            "group": "__unconfigured-panel",
+            "group": "timeseries",
             "kind": "VizConfig",
             "spec": {
               "fieldConfig": {
-                "defaults": {},
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": 0
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
                 "overrides": []
               },
-              "options": {}
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
             },
             "version": "13.0.2"
           }
@@ -94,7 +163,20 @@
         ]
       }
     },
-    "links": [],
+    "links": [
+      {
+        "asDropdown": false,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [],
+        "targetBlank": true,
+        "title": "Source (GitHub)",
+        "tooltip": "View source file in repository",
+        "type": "link",
+        "url": "https://github.com/Bolukan/Grafana-dashboards/blob/master/grafana/p1mon/gas-influxdbp1mon.json"
+      }
+    ],
     "liveNow": false,
     "preferences": {
       "layout": {
@@ -121,10 +203,10 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-6h",
+      "from": "2026-10-31T23:00:00.000Z",
       "hideTimepicker": false,
       "timezone": "Europe/Amsterdam",
-      "to": "now"
+      "to": "2026-11-01T23:00:00.000Z"
     },
     "title": "Gas (Influxdb|p1mon)",
     "variables": []
