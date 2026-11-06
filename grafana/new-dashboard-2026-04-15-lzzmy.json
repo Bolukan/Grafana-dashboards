@@ -537,7 +537,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-30d",
+      "from": "now-7d",
       "hideTimepicker": false,
       "timezone": "browser",
       "to": "now"
