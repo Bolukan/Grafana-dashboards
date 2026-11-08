@@ -48,7 +48,7 @@
                       "group": "influxdb",
                       "kind": "DataQuery",
                       "spec": {
-                        "query": "import \"date\"\r\n\r\nfrom(bucket: \"Residence\")\r\n  |\u003e range(start: 2026-07-01, stop: v.timeRangeStop)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"protocol\"] == \"p1mon\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"topic\"] == \"pi58\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"minute\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n |\u003e aggregateWindow(every: 5m, fn: sum, createEmpty: false )\r\n  |\u003e map(fn: (r) =\u003e ({\r\n      r with\r\n      hour: date.hour(t: r._time),\r\n      minute: date.minute(t: r._time)\r\n  }))\r\n\r\n  |\u003e group(columns: [\"hour\", \"minute\"])\r\n  |\u003e sum(column: \"_value\")\r\n\r\n  |\u003e map(fn: (r) =\u003e ({\r\n      r with\r\n      _time: date.add(\r\n          d: duration(v: string(v: r.hour * 60 + r.minute) + \"m\"),\r\n          to: 2026-11-01T00:00:00Z\r\n      )\r\n  }))\r\n\r\n  |\u003e group()\r\n  |\u003e sort(columns: [\"_time\"])\r\n  |\u003e drop(columns: [\"hour\", \"minute\"])"
+                        "query": "import \"date\"\r\n\r\nfrom(bucket: \"Residence\")\r\n  |\u003e range(start: 2026-11-01, stop: now)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"protocol\"] == \"p1mon\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"topic\"] == \"pi58\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"minute\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n |\u003e aggregateWindow(every: 5m, fn: sum, createEmpty: false )\r\n  |\u003e map(fn: (r) =\u003e ({\r\n      r with\r\n      hour: date.hour(t: r._time),\r\n      minute: date.minute(t: r._time)\r\n  }))\r\n\r\n  |\u003e group(columns: [\"hour\", \"minute\"])\r\n  |\u003e sum(column: \"_value\")\r\n\r\n  |\u003e map(fn: (r) =\u003e ({\r\n      r with\r\n      _time: date.add(\r\n          d: duration(v: string(v: r.hour * 60 + r.minute) + \"m\"),\r\n          to: 2026-11-01T00:00:00Z\r\n      )\r\n  }))\r\n\r\n  |\u003e group()\r\n  |\u003e sort(columns: [\"_time\"])\r\n  |\u003e drop(columns: [\"hour\", \"minute\"])"
                       },
                       "version": "v0"
                     },
@@ -114,7 +114,8 @@
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": 0
                       },
                       {
                         "color": "red",
