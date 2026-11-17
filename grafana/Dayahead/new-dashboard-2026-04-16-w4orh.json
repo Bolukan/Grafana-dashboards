@@ -700,7 +700,7 @@
       "timezone": "Europe/Amsterdam",
       "to": "2025-09-30T21:59:59.000Z"
     },
-    "title": "Dynamische energieprijs",
+    "title": "Dynamische energieprijs per uur",
     "variables": []
   }
 }
