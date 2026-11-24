@@ -42,10 +42,13 @@
                   "spec": {
                     "hidden": false,
                     "query": {
-                      "group": "",
+                      "datasource": {
+                        "name": "de9ejk2fk91j4b"
+                      },
+                      "group": "influxdb",
                       "kind": "DataQuery",
                       "spec": {
-                        "query": "import \"date\"\r\n\r\nfrom(bucket: \"Residence\")\r\n  |\u003e range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"protocol\"] == \"p1mon\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"topic\"] == \"pi58\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"day\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n  |\u003e aggregateWindow(every: 1mo, fn: sum, timeSrc: \"_start\", createEmpty: false )\r\n"
+                        "query": "from(bucket: \"Residence\")\r\n  |\u003e range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |\u003e filter(fn: (r) =\u003e r[\"_measurement\"] == \"Powergas\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"protocol\"] == \"p1mon\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"topic\"] == \"pi58\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"duration\"] == \"day\")\r\n  |\u003e filter(fn: (r) =\u003e r[\"_field\"] == \"consumption_gas_delta_m3\")\r\n  |\u003e aggregateWindow(every: 1mo, fn: sum, timeSrc: \"_start\", createEmpty: false )\r\n"
                       },
                       "version": "v0"
                     },
@@ -76,7 +79,7 @@
                     "axisColorMode": "text",
                     "axisLabel": "",
                     "axisPlacement": "auto",
-                    "barAlignment": 0,
+                    "barAlignment": 1,
                     "barWidthFactor": 0.9,
                     "drawStyle": "bars",
                     "fillOpacity": 90,
@@ -104,6 +107,8 @@
                       "mode": "off"
                     }
                   },
+                  "displayName": "${__field.name}",
+                  "fieldMinMax": false,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -332,7 +337,7 @@
         "1d"
       ],
       "fiscalYearStartMonth": 0,
-      "from": "now-30d",
+      "from": "now-1y-2M",
       "hideTimepicker": false,
       "timezone": "Europe/Amsterdam",
       "to": "now"
