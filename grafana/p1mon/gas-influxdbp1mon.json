@@ -225,6 +225,7 @@
                       "mode": "off"
                     }
                   },
+                  "displayName": "${__field.name}",
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
