@@ -176,7 +176,7 @@
           "description": "",
           "id": 3,
           "links": [],
-          "title": "New panel",
+          "title": "Gasverbruik per dag",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -193,9 +193,9 @@
                     "axisLabel": "",
                     "axisPlacement": "auto",
                     "barAlignment": 1,
-                    "barWidthFactor": 0.6,
+                    "barWidthFactor": 0.7,
                     "drawStyle": "bars",
-                    "fillOpacity": 0,
+                    "fillOpacity": 80,
                     "gradientMode": "none",
                     "hideFrom": {
                       "legend": false,
@@ -283,8 +283,8 @@
                 "kind": "ElementReference",
                 "name": "panel-3"
               },
-              "height": 8,
-              "width": 12,
+              "height": 12,
+              "width": 24,
               "x": 0,
               "y": 12
             }
